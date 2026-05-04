@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { getActiveCars } from "../services/cars.service";
+import { getActiveCars, deleteCarEntry } from "../services/cars.service";
+import { useAuth } from "../context/AuthContext";
 import "./ActiveCars.css";
 
 export default function ActiveCars() {
-  const [records, setRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState("");
+  const { user }               = useAuth();
+  const [records, setRecords]  = useState([]);
+  const [loading, setLoading]  = useState(true);
+  const [error, setError]      = useState("");
+
+  const isAdmin = user?.role === "ADMIN";
 
   function load() {
     setLoading(true);
@@ -16,6 +20,17 @@ export default function ActiveCars() {
   }
 
   useEffect(() => { load(); }, []);
+
+  async function handleVoid(id, plateNumber) {
+    if (!window.confirm(`Void entry for ${plateNumber}? This will free the parking space.`)) return;
+    setError("");
+    try {
+      await deleteCarEntry(id);
+      load();
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to void entry");
+    }
+  }
 
   return (
     <div className="page">
@@ -43,8 +58,9 @@ export default function ActiveCars() {
                 <th>Plate Number</th>
                 <th>Parking</th>
                 <th>Entry Time</th>
-                <th>Hours Parked</th>
+                <th>Duration</th>
                 <th>Estimated Bill</th>
+                {isAdmin && <th>Action</th>}
               </tr>
             </thead>
             <tbody>
@@ -53,8 +69,15 @@ export default function ActiveCars() {
                   <td><strong>{r.plateNumber}</strong></td>
                   <td>{r.parkingName} <span style={{ color: "#94a3b8", fontSize: 12 }}>({r.parkingCode})</span></td>
                   <td>{new Date(r.entryDateTime).toLocaleString()}</td>
-                  <td>{r.hoursParked}h</td>
-                  <td><strong style={{ color: "#2563eb" }}>${r.estimatedAmount.toFixed(2)}</strong></td>
+                  <td>{r.durationFormatted}</td>
+                  <td><strong style={{ color: "#2563eb" }}>{Math.round(r.estimatedAmount).toLocaleString()} RWF</strong></td>
+                  {isAdmin && (
+                    <td>
+                      <button className="btn-delete" onClick={() => handleVoid(r.id, r.plateNumber)}>
+                        Void
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

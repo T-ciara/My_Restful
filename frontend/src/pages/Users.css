@@ -64,6 +64,23 @@
 .role-admin     { background: #eff6ff; color: #2563eb; }
 .role-attendant { background: #f0fdf4; color: #16a34a; }
 
+.btn-edit {
+  padding: 5px 12px;
+  background: #fff;
+  border: 1.5px solid #93c5fd;
+  border-radius: 6px;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-edit:hover {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
 .btn-delete {
   padding: 5px 12px;
   background: #fff;
@@ -79,4 +96,10 @@
   background: #ef4444;
   color: white;
   border-color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .table-wrapper {
+    overflow-x: auto;
+  }
 }

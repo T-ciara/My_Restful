@@ -8,4 +8,12 @@ const createUserRules = [
   body("role").isIn(["ADMIN", "ATTENDANT"]).withMessage("Role must be ADMIN or ATTENDANT"),
 ];
 
-module.exports = { createUserRules };
+const updateUserRules = [
+  body("firstName").optional().trim().notEmpty().withMessage("First name cannot be empty"),
+  body("lastName").optional().trim().notEmpty().withMessage("Last name cannot be empty"),
+  body("email").optional().isEmail().withMessage("Valid email is required"),
+  body("password").optional().isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
+  body("role").optional().isIn(["ADMIN", "ATTENDANT"]).withMessage("Role must be ADMIN or ATTENDANT"),
+];
+
+module.exports = { createUserRules, updateUserRules };

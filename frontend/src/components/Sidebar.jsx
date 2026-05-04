@@ -1,4 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Sidebar.css";
 
@@ -18,6 +19,12 @@ const ADMIN_ITEMS = [
 export default function Sidebar() {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   function handleLogout() {
     logoutUser();
@@ -25,10 +32,20 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="sidebar">
+    <>
+      <button className="mobile-menu-btn" onClick={() => setMobileOpen(true)} aria-label="Open menu">
+        ☰
+      </button>
+
+      {mobileOpen && (
+        <div className="sidebar-overlay" onClick={() => setMobileOpen(false)} />
+      )}
+
+      <aside className={`sidebar${mobileOpen ? " sidebar-open" : ""}`}>
       <div className="sidebar-brand">
         <span className="brand-icon">🅿</span>
         <span className="brand-name">ParkManager</span>
+        <button className="sidebar-close-btn" onClick={() => setMobileOpen(false)} aria-label="Close menu">✕</button>
       </div>
 
       <div className="sidebar-user">
@@ -72,5 +89,6 @@ export default function Sidebar() {
         <span>🚪</span> Logout
       </button>
     </aside>
+    </>
   );
 }

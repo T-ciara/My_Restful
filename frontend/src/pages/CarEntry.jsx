@@ -3,6 +3,12 @@ import { carEntry } from "../services/cars.service";
 import { getAllParking } from "../services/parking.service";
 import "./CarForm.css";
 
+const PLATE_REGEX = /^R[A-Z]{2}\s?\d{3}\s?[A-Z]$/i;
+
+function formatRWF(amount) {
+  return `${Math.round(amount).toLocaleString()} RWF`;
+}
+
 export default function CarEntry() {
   const [form, setForm]         = useState({ plateNumber: "", parkingCode: "" });
   const [parkings, setParkings] = useState([]);
@@ -23,13 +29,20 @@ export default function CarEntry() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError(""); setTicket(null);
+
+    const plate = form.plateNumber.trim().toUpperCase();
+    if (!PLATE_REGEX.test(plate)) {
+      setError("Invalid plate number format. Use Rwandan format: RAB 123 D");
+      return;
+    }
+
     setLoading(true);
     try {
-      const res = await carEntry(form);
+      const res = await carEntry({ ...form, plateNumber: plate });
       setTicket(res.data.ticket);
       setForm({ plateNumber: "", parkingCode: "" });
     } catch (err) {
-      setError(err.response?.data?.message || "Entry failed");
+      setError(err.response?.data?.message || err.response?.data?.errors?.[0]?.msg || "Entry failed");
     } finally {
       setLoading(false);
     }
@@ -54,7 +67,7 @@ export default function CarEntry() {
             <div className="ticket-row"><span>Plate Number</span><strong>{ticket.plateNumber}</strong></div>
             <div className="ticket-row"><span>Parking</span><strong>{ticket.parkingName} ({ticket.parkingCode})</strong></div>
             <div className="ticket-row"><span>Entry Time</span><strong>{new Date(ticket.entryDateTime).toLocaleString()}</strong></div>
-            <div className="ticket-row"><span>Rate</span><strong>${ticket.feePerHour}/hr</strong></div>
+            <div className="ticket-row"><span>Rate</span><strong>{formatRWF(ticket.feePerHour)}/hr</strong></div>
           </div>
         )}
 
@@ -68,6 +81,7 @@ export default function CarEntry() {
               onChange={handleChange}
               required
             />
+            <small style={{ color: "#94a3b8" }}>Rwandan format: RAB 123 A (R + 2 letters + 3 digits + 1 letter)</small>
           </div>
           <div className="form-group">
             <label>Parking Location</label>
@@ -75,7 +89,7 @@ export default function CarEntry() {
               <option value="">-- Select parking --</option>
               {parkings.map((p) => (
                 <option key={p.code} value={p.code}>
-                  {p.name} ({p.code}) — {p.availableSpaces} spaces free | ${p.feePerHour}/hr
+                  {p.name} ({p.code}) — {p.availableSpaces} spaces free | {formatRWF(p.feePerHour)}/hr
                 </option>
               ))}
             </select>

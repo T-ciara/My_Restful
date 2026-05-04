@@ -3,6 +3,18 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+function formatDuration(ms) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const parts = [];
+  if (hours > 0) parts.push(`${hours}h`);
+  if (minutes > 0) parts.push(`${minutes}m`);
+  parts.push(`${seconds}s`);
+  return parts.join(" ");
+}
+
 async function carEntry(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -63,6 +75,7 @@ async function carExit(req, res) {
     const durationMs = exitTime - entry.entryDateTime;
     const durationHours = Math.ceil(durationMs / (1000 * 60 * 60));
     const chargedAmount = durationHours * entry.parking.feePerHour;
+    const durationFormatted = formatDuration(durationMs);
 
     const [updated] = await prisma.$transaction([
       prisma.carEntry.update({
@@ -82,6 +95,7 @@ async function carExit(req, res) {
         parkingName: entry.parking.name,
         entryDateTime: entry.entryDateTime,
         exitDateTime: exitTime,
+        durationFormatted,
         durationHours,
         feePerHour: entry.parking.feePerHour,
         chargedAmount,
@@ -109,6 +123,7 @@ async function getActiveCars(req, res) {
         parkingName: r.parking.name,
         parkingCode: r.parkingCode,
         entryDateTime: r.entryDateTime,
+        durationFormatted: formatDuration(durationMs),
         hoursParked: durationHours,
         estimatedAmount: durationHours * r.parking.feePerHour,
       };
@@ -120,4 +135,32 @@ async function getActiveCars(req, res) {
   }
 }
 
-module.exports = { carEntry, carExit, getActiveCars };
+async function deleteCarEntry(req, res) {
+  const id = parseInt(req.params.id);
+
+  try {
+    const entry = await prisma.carEntry.findUnique({
+      where: { id },
+      include: { parking: true },
+    });
+    if (!entry) return res.status(404).json({ message: "Car entry not found" });
+    if (entry.exitDateTime) {
+      return res.status(400).json({ message: "Cannot void a completed entry (car already exited)" });
+    }
+
+    await prisma.$transaction([
+      prisma.carEntry.delete({ where: { id } }),
+      prisma.parking.update({
+        where: { code: entry.parkingCode },
+        data: { availableSpaces: { increment: 1 } },
+      }),
+    ]);
+
+    res.json({ message: "Car entry voided successfully" });
+  } catch (err) {
+    if (err.code === "P2025") return res.status(404).json({ message: "Car entry not found" });
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+module.exports = { carEntry, carExit, getActiveCars, deleteCarEntry };

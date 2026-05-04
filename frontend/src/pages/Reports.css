@@ -141,3 +141,13 @@
   border-radius: 12px;
   border: 1.5px dashed #e2e8f0;
 }
+
+@media (max-width: 768px) {
+  .tab-bar {
+    flex-wrap: wrap;
+  }
+
+  .filter-form .form-group {
+    width: 100%;
+  }
+}

@@ -130,7 +130,7 @@ export default function Reports() {
             {total} record{total !== 1 ? "s" : ""}
             {tab === "outgoing" && (
               <span className="report-total">
-                Total amount charged: ${totalRevenue.toFixed(2)}
+                Total amount charged: {Math.round(totalRevenue).toLocaleString()} RWF
               </span>
             )}
           </div>
@@ -155,7 +155,7 @@ export default function Reports() {
                       <>
                         <td>{new Date(r.exitDateTime).toLocaleString()}</td>
                         <td>{r.durationHours}h</td>
-                        <td><strong>${r.chargedAmount.toFixed(2)}</strong></td>
+                        <td><strong>{Math.round(r.chargedAmount).toLocaleString()} RWF</strong></td>
                       </>
                     )}
                     {tab === "entries" && (
@@ -166,7 +166,7 @@ export default function Reports() {
                             {r.status}
                           </span>
                         </td>
-                        <td><strong>${r.chargedAmount.toFixed(2)}</strong></td>
+                        <td><strong>{Math.round(r.chargedAmount).toLocaleString()} RWF</strong></td>
                       </>
                     )}
                   </tr>
