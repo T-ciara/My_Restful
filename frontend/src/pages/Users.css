@@ -1,0 +1,82 @@
+.btn-add {
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-add:hover { background: #2563eb; }
+
+.user-form {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 560px;
+}
+.user-form h2 { margin: 0; font-size: 18px; color: #0f172a; }
+
+.table-wrapper {
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  overflow: hidden;
+}
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+}
+.report-table th {
+  background: #f8fafc;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+.report-table td {
+  padding: 13px 16px;
+  color: #374151;
+  border-bottom: 1px solid #f1f5f9;
+}
+.report-table tr:last-child td { border-bottom: none; }
+.report-table tr:hover td      { background: #f8fafc; }
+
+.role-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.role-admin     { background: #eff6ff; color: #2563eb; }
+.role-attendant { background: #f0fdf4; color: #16a34a; }
+
+.btn-delete {
+  padding: 5px 12px;
+  background: #fff;
+  border: 1.5px solid #fca5a5;
+  border-radius: 6px;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-delete:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}

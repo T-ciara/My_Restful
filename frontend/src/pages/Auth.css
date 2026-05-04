@@ -1,0 +1,146 @@
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-logo {
+  font-size: 40px;
+  background: #3b82f6;
+  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  color: white;
+}
+
+.auth-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.auth-header p {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: border-color 0.15s;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3b82f6;
+  background: #fff;
+}
+
+.btn-primary {
+  padding: 12px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.auth-footer a {
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}

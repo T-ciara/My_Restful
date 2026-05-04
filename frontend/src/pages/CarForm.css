@@ -1,0 +1,70 @@
+.form-card {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.car-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ticket {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ticket.bill {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.ticket-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ticket-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ticket-icon { font-size: 20px; }
+
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #374151;
+}
+
+.ticket-row span  { color: #64748b; }
+.ticket-row strong { color: #0f172a; }
+
+.ticket-divider {
+  height: 1px;
+  background: #d1d5db;
+  margin: 4px 0;
+}
+
+.ticket-row.total span,
+.ticket-row.total strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+}

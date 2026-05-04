@@ -1,0 +1,104 @@
+.btn-add {
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-add:hover { background: #2563eb; }
+
+.parking-form {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.parking-form h2 { margin: 0; font-size: 18px; color: #0f172a; }
+
+.parking-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.parking-card {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.15s;
+}
+.parking-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+.parking-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.parking-code {
+  font-size: 12px;
+  font-weight: 700;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.badge-ok   { background: #f0fdf4; color: #16a34a; }
+.badge-full { background: #fef2f2; color: #dc2626; }
+
+.parking-name     { font-size: 16px; font-weight: 700; color: #0f172a; margin: 0; }
+.parking-location { font-size: 13px; color: #64748b; margin: 0; }
+
+.parking-spaces   { font-size: 14px; color: #374151; }
+.spaces-available { font-weight: 700; font-size: 20px; color: #3b82f6; }
+.spaces-sep, .spaces-total { color: #94a3b8; font-size: 13px; }
+
+.occupancy-bar-bg {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.occupancy-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s;
+}
+
+.parking-fee {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px;
+  color: #94a3b8;
+  font-size: 15px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1.5px dashed #e2e8f0;
+}

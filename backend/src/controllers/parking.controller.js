@@ -1,0 +1,52 @@
+const { validationResult } = require("express-validator");
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
+
+async function createParking(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const { code, name, location, totalSpaces, feePerHour } = req.body;
+  try {
+    const parking = await prisma.parking.create({
+      data: {
+        code: code.toUpperCase(),
+        name,
+        location,
+        totalSpaces: parseInt(totalSpaces),
+        availableSpaces: parseInt(totalSpaces),
+        feePerHour: parseFloat(feePerHour),
+      },
+    });
+    res.status(201).json({ message: "Parking created", parking });
+  } catch (err) {
+    if (err.code === "P2002") return res.status(409).json({ message: "Parking code already exists" });
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+async function getAllParking(req, res) {
+  try {
+    const parkings = await prisma.parking.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    res.json(parkings);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+async function getParkingByCode(req, res) {
+  try {
+    const parking = await prisma.parking.findUnique({
+      where: { code: req.params.code.toUpperCase() },
+    });
+    if (!parking) return res.status(404).json({ message: "Parking not found" });
+    res.json(parking);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+module.exports = { createParking, getAllParking, getParkingByCode };

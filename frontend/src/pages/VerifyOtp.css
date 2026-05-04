@@ -1,0 +1,69 @@
+.otp-email {
+  font-weight: 700;
+  color: #3b82f6;
+  font-size: 14px;
+  margin: 2px 0 0;
+}
+
+.otp-boxes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 8px 0 4px;
+}
+
+.otp-box {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  caret-color: transparent;
+}
+
+.otp-box:focus {
+  border-color: #3b82f6;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.otp-box:not(:placeholder-shown) {
+  border-color: #3b82f6;
+}
+
+.otp-resend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.resend-btn:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.resend-btn:not(:disabled):hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
